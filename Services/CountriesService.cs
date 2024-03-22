@@ -20,6 +20,7 @@ namespace Services
             if (string.IsNullOrEmpty(countryAddRequest.CountryName)) throw new ArgumentException(nameof(countryAddRequest.CountryName));
 
             //validation: Country cant be duplicate
+            
 
             if (_countries.Where(temp => temp.CountryName == countryAddRequest.CountryName).Count() > 0)
             {
@@ -44,6 +45,15 @@ namespace Services
         {
             return _countries.Select(temp => temp.ToCountryReponse()).ToList();
 
+        }
+
+        public CountryReponse? GetByID(Guid? id)
+        {
+            if (id == null) return null;
+            Country? country = _countries.FirstOrDefault(temp => temp.CountryId == id);
+            if (country == null) return null;
+
+            return country.ToCountryReponse();
         }
     }
 }

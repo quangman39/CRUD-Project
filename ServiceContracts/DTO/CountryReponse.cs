@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ServiceContracts.DTO
 {
+    /// <summary>
+    /// DTO class to used as return of most method of CountryService 
+    /// </summary>
     public class CountryReponse
     {
         public Guid CountryId { get; set; }
@@ -20,10 +23,15 @@ namespace ServiceContracts.DTO
                 return false;
             }
 
-            CountryReponse country_to_compare = obj as CountryReponse;
+            CountryReponse country_to_compare =(CountryReponse) obj;
 
             return this.CountryId == country_to_compare.CountryId && 
                         this.CountryName == country_to_compare.CountryName;
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 
