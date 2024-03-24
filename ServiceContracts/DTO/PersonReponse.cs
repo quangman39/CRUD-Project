@@ -1,9 +1,5 @@
 ﻿using Enities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ServiceContracts.Enums;
 
 namespace ServiceContracts.DTO
 {
@@ -26,29 +22,44 @@ namespace ServiceContracts.DTO
 
         public override bool Equals(object? obj)
         {
-            if(obj  == null || !(obj is PersonReponse))
+            if (obj == null || !(obj is PersonReponse))
             {
                 return false;
             }
 
             PersonReponse person_to_compare = (PersonReponse)obj;
 
-            
-            return person_to_compare.PersonID == this.PersonID&&
-                   person_to_compare.PersonName == this.PersonName&&
-                   person_to_compare.Gender == this.Gender&&
-                   person_to_compare.Country == this.Country&&
-                   person_to_compare.CountryId == this.CountryId&&
-                   person_to_compare.Address == this.Address&&
-                   person_to_compare.ReceiveNewsLetters == this.ReceiveNewsLetters&&
+
+            return person_to_compare.PersonID == this.PersonID &&
+                   person_to_compare.PersonName == this.PersonName &&
+                   person_to_compare.Gender == this.Gender &&
+                   person_to_compare.Country == this.Country &&
+                   person_to_compare.CountryId == this.CountryId &&
+                   person_to_compare.Address == this.Address &&
+                   person_to_compare.ReceiveNewsLetters == this.ReceiveNewsLetters &&
                    person_to_compare.DateOfBirth == this.DateOfBirth;
-                    
-                
+
+
+        }
+        public PersonUpdateRequest ToPersonUpdateRequest()
+        {
+            return new PersonUpdateRequest()
+            {
+                PersonId = PersonID,
+                PersonName = PersonName,
+                Email = Email,
+                DateOfBirth = DateOfBirth,
+                Gender = (GenderOptions?)Enum.Parse(typeof(GenderOptions), Gender, true),
+                CountryId = CountryId,
+                Address = Address,
+                ReceiveNewsLetters = ReceiveNewsLetters
+            };
         }
 
     }
 
-    public static class PersonExtensions {
+    public static class PersonExtensions
+    {
         /// <summary>
         /// An extention method to covert an object of Person class into PersonPonse
         /// </summary>
@@ -72,5 +83,5 @@ namespace ServiceContracts.DTO
         }
     }
 
-   
+
 }
