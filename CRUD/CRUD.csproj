@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="countries.json" />
+    <None Include="people.json" />
     <None Include="wwwroot\lib\bootstrap\css\bootstrap-grid.css" />
     <None Include="wwwroot\lib\bootstrap\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\css\bootstrap-grid.min.css" />
@@ -143,6 +145,23 @@
     <None Include="wwwroot\lib\bootstrap\scss\_utilities.scss" />
     <None Include="wwwroot\lib\bootstrap\scss\_variables-dark.scss" />
     <None Include="wwwroot\lib\bootstrap\scss\_variables.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceContracts\ServiceContracts.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\data\" />
   </ItemGroup>
 
 </Project>

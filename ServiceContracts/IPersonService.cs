@@ -13,18 +13,18 @@ namespace ServiceContracts
         /// </summary>
         /// <param name="personAddRequest">A obj of person that is used to add</param>
 
-        PersonReponse AddPerson(PersonAddRequest? personAddRequest);
+        Task<PersonReponse> AddPerson(PersonAddRequest? personAddRequest);
         /// <summary>
         /// Get Person By personId 
         /// </summary>
         /// <param name="personId"> personId is used find person object </param>
         /// <returns>Proper person obj as PersonReponse obj</returns>
-        PersonReponse? GetPersonById(Guid? personId);
+        Task<PersonReponse>? GetPersonById(Guid? personId);
         /// <summary>
         ///  get all person form list
         /// </summary>
         /// <returns> return list of person as lisf of PersonReponse object</returns>
-        List<PersonReponse> GetAllPerson();
+        Task<List<PersonReponse>> GetAllPerson();
 
         /// <summary>
         /// Return all person obj that matches with the given search fields and search string
@@ -32,7 +32,7 @@ namespace ServiceContracts
         /// <param name="searchBy"> Search Field to search</param>
         /// <param name="searchString"> Search String to Search</param>
         /// <returns> return all matching obj based on the given search </returns>
-        List<PersonReponse> GetFilterPerson(string searchBy, string? searchString);
+        Task<List<PersonReponse>> GetFilterPerson(string searchBy, string? searchString);
         /// <summary>
         /// Return sorted list of Person
         /// </summary>
@@ -40,20 +40,20 @@ namespace ServiceContracts
         /// <param name="SortBy"> Name of the property (Key),based on which the persons should be sorted </param>
         /// <param name="sortOrder"> ASC or ESC  </param>
         /// <returns> Returns sorted Person as List of Person </returns>
-        List<PersonReponse> GetSortedPerson(List<PersonReponse> allPersons, string SortBy, SortOrderOptions sortOrder);
+        Task<List<PersonReponse>> GetSortedPerson(List<PersonReponse> allPersons, string SortBy, SortOrderOptions sortOrder);
 
         /// <summary>
         ///Update the specified person details based on the given personId
         /// </summary>
         /// <param name="PersonId"> person obj details  to update existing obj, including person Id</param>
         /// <returns> Updated PersonReponse</returns>
-        PersonReponse UpdatePerson(PersonUpdateRequest? personUpdateRequest);
+        Task<PersonReponse> UpdatePerson(PersonUpdateRequest? personUpdateRequest);
 
         /// <summary>
         /// Delete matching person is found by the given person Id 
         /// </summary>
         /// <param name="personId"> personId to find person object </param>
         /// <returns> true if successfully remove obj and fail if it fails </returns>
-        bool DeletePerosn(Guid? personId);
+        Task<bool> DeletePerosn(Guid? personId);
     }
 }

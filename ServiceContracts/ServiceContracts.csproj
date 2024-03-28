@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CRUD\CRUD.csproj" />
     <ProjectReference Include="..\Enities\Enities.csproj" />
   </ItemGroup>
 

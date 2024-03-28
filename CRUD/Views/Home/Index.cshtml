@@ -1,1 +1,112 @@
-﻿
+﻿@model List<PersonReponse>;
+
+    <div class="row">
+        <div class="col-10">
+            <h2 class="m-3"> 
+                Persons
+            </h2>
+        </div>
+        <div class="col-2">
+        <button class="btn btn-info m-3">
+                <a class="text-decoration-none" asp-controller="Home" asp-action="Create">Create New</a>
+            </button>
+        </div>
+
+    </div>
+    
+    
+<form asp-controller="Home">
+    <div class="card shadow p-2">
+        <div class="card-body row">
+            <div class="col-4">
+                <select name="SearchBy" class="form-control">
+                    @{
+                        foreach (var field in ViewBag.SearchFields)
+                        {
+                            if (field.Key == ViewBag.CurrentSeachBy)
+                            {
+                                <option selected value="@field.Key">@field.Value</option>
+
+                            }
+                            else
+                            {
+                                <option  value="@field.Key">@field.Value</option>
+                            }
+                        }
+                     }
+                </select>
+            </div>
+            <div class="col-4">
+                <input type="search" id="search" name="SearchString" value="@ViewBag.CurrentSeachString" class="form-control" />
+            </div>
+            <div class="col-4">
+               <button class="btn btn-secondary">Search</button>
+               <a asp-controller="Home" asp-action="Index" class="btn btn-warning opacity-75  ms-2">Clear All</a>
+            </div>
+
+</form>
+
+    <table class="table  custom-table table-secondary table-bordered w-100  table-striped p-0 m-0 mt-3">
+    <thead class="table-success">
+            <tr >
+
+          
+                @await Html.PartialAsync("_ColumHeader",new ViewDataDictionary(ViewData)
+                {
+                    {"ColumnName", nameof(PersonReponse.PersonName)},
+                    {"DisplayName","Person Name"}
+                })
+
+                @await Html.PartialAsync("_ColumHeader", new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(PersonReponse.Email)},
+                {"DisplayName","Email"}
+                })
+                @await Html.PartialAsync("_ColumHeader", new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(PersonReponse.DateOfBirth)},
+                {"DisplayName","Date Of Birth"}
+                })
+                @await Html.PartialAsync("_ColumHeader", new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(PersonReponse.Age)},
+                {"DisplayName","Age"}
+                })
+
+                <th> Gender</th>
+                <th> Country</th>
+                @await Html.PartialAsync("_ColumHeader", new ViewDataDictionary(ViewData)
+                {
+                {"ColumnName", nameof(PersonReponse.Address)},
+                {"DisplayName","Address"}
+                })
+
+
+            <th> Receive Letter</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+             @foreach(PersonReponse person in Model)
+                {
+                <tr>
+                    <td>@person.PersonName</td>
+                    <td> @person.Email</td>
+                    <td>  @person.DateOfBirth?.ToShortDateString()</td>
+                    <td>  @person.Age</td>
+                    <td> @person.Gender</td>
+                    <td>  @person.Country</td>
+                    <td>  @person.Address</td>
+                    <td>  @person.ReceiveNewsLetters</td>
+                    <td> 
+                  
+                                <a class="text-decoration-none" asp-controller="Home" asp-action="Edit" asp-route-idPerson="@person.PersonID">Edit</a>
+                    <a class="text-decoration-none" asp-controller="Home" asp-action="Delete" asp-route-idPerson="@person.PersonID">Delete</a>
+                         
+                    </td>
+                </tr>
+                }
+         </tbody>
+    </table>
+    </div>
+</div>  
