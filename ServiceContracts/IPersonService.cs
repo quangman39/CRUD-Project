@@ -19,7 +19,7 @@ namespace ServiceContracts
         /// </summary>
         /// <param name="personId"> personId is used find person object </param>
         /// <returns>Proper person obj as PersonReponse obj</returns>
-        Task<PersonReponse>? GetPersonById(Guid? personId);
+        Task<PersonReponse?> GetPersonById(Guid? personId);
         /// <summary>
         ///  get all person form list
         /// </summary>

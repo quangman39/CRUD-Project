@@ -1,5 +1,7 @@
 using Enities;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
+using RepositoriesContracts;
 using ServiceContracts;
 using Services;
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(
     });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+builder.Services.AddScoped<IPersonsRepository, PersonsRepository>();
+
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 
@@ -25,3 +30,6 @@ app.MapControllerRoute(
 
 
 app.Run();
+
+
+public partial class Program { } //make the auto generated program accessible programmatically

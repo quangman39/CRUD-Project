@@ -65,7 +65,7 @@ namespace CRUD.Controllers
                     Text = x.CountryName,
                 });
                 ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return View();
+                return View(personAdd);
             }
             //call service method
             PersonReponse personReponse = await _personService.AddPerson(personAdd);

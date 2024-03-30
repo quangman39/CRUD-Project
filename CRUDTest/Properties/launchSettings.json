@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CRUDTest": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

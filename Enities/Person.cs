@@ -13,7 +13,7 @@ namespace Enities
         public string? Gender { get; set; }
         public Guid? CountryId { get; set; }
         [ForeignKey(nameof(CountryId))]
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
         public string? Address { get; set; }
         public bool? ReceiveNewsLetters { get; set; }
 

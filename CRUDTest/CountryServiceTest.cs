@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services;
+using Xunit;
 
 namespace CRUDTest
 {
@@ -21,7 +22,7 @@ namespace CRUDTest
 
             ApplicationDbContext dbContext = dbContextMook.Object;
             dbContextMook.CreateDbSetMock(temp => temp.Countries, countriesInitialData);
-            _countriesService = new CountriesService(dbContext);
+            _countriesService = new CountriesService(null);
         }
         #region AddCountry 
         [Fact]

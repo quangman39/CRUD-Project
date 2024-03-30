@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD", "CRUD\CRUD.csproj", "{445C7E25-A003-4740-9973-3C8A44D684BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD", "CRUD\CRUD.csproj", "{445C7E25-A003-4740-9973-3C8A44D684BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDTest", "CRUDTest\CRUDTest.csproj", "{D0235FC3-7819-402C-98C6-DE9AB52541A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUDTest", "CRUDTest\CRUDTest.csproj", "{D0235FC3-7819-402C-98C6-DE9AB52541A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enities", "Enities\Enities.csproj", "{DCB30C25-BEE9-43B6-9C1D-B34F5CC27C27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enities", "Enities\Enities.csproj", "{DCB30C25-BEE9-43B6-9C1D-B34F5CC27C27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{DF14D762-0491-46D9-A3D7-AFE07056DB01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{DF14D762-0491-46D9-A3D7-AFE07056DB01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{93A032AA-8206-4488-AF82-72C51F6653E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{93A032AA-8206-4488-AF82-72C51F6653E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoriesContracts", "IRepository\RepositoriesContracts.csproj", "{353E6700-3188-49AA-B331-4524BA14C5E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{BE6B92A1-E6B4-416A-81A4-E03A38A43138}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{93A032AA-8206-4488-AF82-72C51F6653E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93A032AA-8206-4488-AF82-72C51F6653E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93A032AA-8206-4488-AF82-72C51F6653E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{353E6700-3188-49AA-B331-4524BA14C5E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{353E6700-3188-49AA-B331-4524BA14C5E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{353E6700-3188-49AA-B331-4524BA14C5E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{353E6700-3188-49AA-B331-4524BA14C5E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE6B92A1-E6B4-416A-81A4-E03A38A43138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6B92A1-E6B4-416A-81A4-E03A38A43138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE6B92A1-E6B4-416A-81A4-E03A38A43138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE6B92A1-E6B4-416A-81A4-E03A38A43138}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
