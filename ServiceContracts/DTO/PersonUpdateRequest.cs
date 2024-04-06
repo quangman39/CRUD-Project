@@ -21,7 +21,7 @@ namespace ServiceContracts.DTO
         public GenderOptions? Gender { get; set; }
         public Guid? CountryId { get; set; }
         public string? Address { get; set; }
-        public bool? ReceiveNewsLetters { get; set; }
+        public bool ReceiveNewsLetters { get; set; }
 
         /// <summary>
         /// Convert the current object of PersonUpdateRequest into a new object of person class

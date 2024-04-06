@@ -21,7 +21,7 @@ namespace ServiceContracts.DTO
         [Required]
         public Guid? CountryId { get; set; }
         public string? Address { get; set; }
-        public bool? ReceiveNewsLetters { get; set; }
+        public bool ReceiveNewsLetters { get; set; }
 
         /// <summary>
         /// convert person from PersonAddRequest to Person

@@ -2,6 +2,7 @@
 using CRUD.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using ServiceContracts;
 using ServiceContracts.DTO;
@@ -16,20 +17,22 @@ namespace CRUDTest
 
         private readonly Mock<IPersonService> _personServiceMock;
         private readonly Mock<ICountriesService> _countriesServiceMock;
+        private readonly Mock<ILogger<HomeController>> _loggerMock;
         private readonly Fixture _fixture;
         private readonly HomeController homeController;
+        private ILogger<HomeController> _logger;
 
         public HomeControllerTest()
         {
             _fixture = new Fixture();
-
             _personServiceMock = new Mock<IPersonService>();
             _countriesServiceMock = new Mock<ICountriesService>();
+            _loggerMock = new Mock<ILogger<HomeController>>();
+            _logger = _loggerMock.Object;
 
             _personService = _personServiceMock.Object;
             _countriesService = _countriesServiceMock.Object;
-
-            homeController = new HomeController(_countriesService, _personService);
+            homeController = new HomeController(_countriesService, _personService, _logger);
         }
 
         [Fact]
@@ -38,7 +41,6 @@ namespace CRUDTest
             //Arrange
             List<PersonReponse> person_reponse_list = _fixture.Create<List<PersonReponse>>();
 
-            HomeController homeController = new HomeController(_countriesService, _personService);
 
             _personServiceMock.Setup(temp => temp.GetFilterPerson(It.IsAny<string>(), It.IsAny<String>()))
             .ReturnsAsync(person_reponse_list);
@@ -69,7 +71,6 @@ namespace CRUDTest
 
             List<CountryReponse> list_country = _fixture.Create<List<CountryReponse>>();
 
-            HomeController homeController = new HomeController(_countriesService, _personService);
 
             _countriesServiceMock.Setup(temp => temp.GetAll())
             .ReturnsAsync(list_country);

@@ -1,4 +1,6 @@
 ﻿using Enities;
+using Exceptions;
+using Microsoft.Extensions.Logging;
 using RepositoriesContracts;
 using ServiceContracts;
 using ServiceContracts.DTO;
@@ -10,8 +12,10 @@ namespace Services
     public class PersonService : IPersonService
     {
         private readonly IPersonsRepository _personsRepository;
-        public PersonService(IPersonsRepository personsRepository)
+        private ILogger<PersonService> _logger;
+        public PersonService(IPersonsRepository personsRepository, ILogger<PersonService> logger)
         {
+            _logger = logger;
             _personsRepository = personsRepository;
         }
         public async Task<PersonReponse> AddPerson(PersonAddRequest? personAddRequest)
@@ -51,38 +55,48 @@ namespace Services
 
         public async Task<List<PersonReponse>> GetAllPerson()
         {
+            _logger.LogInformation("GetAll in PersonService");
+
             return (await _personsRepository.GetAllPersons()).Select(u => u.ToPersonReoponse()).ToList();
         }
 
         public async Task<List<PersonReponse>> GetFilterPerson(string searchBy, string? searchString)
         {
-            List<Person> persons = searchBy switch
+
+            _logger.LogInformation("GetFilterPerson in PersonService");
+            List<Person> matchingPersons;
+            switch (searchBy)
             {
-                nameof(PersonReponse.PersonName) =>
-                await _personsRepository.GetFilterPersons(temp =>
-                temp.PersonName.Contains(searchString)),
+                case nameof(PersonReponse.PersonName):
+                    matchingPersons = await _personsRepository.GetFilterPersons(temp => temp.PersonName.Contains(searchString));
+                    break;
 
-                nameof(PersonReponse.Email) =>
-                await _personsRepository.GetFilterPersons(temp =>
-                temp.Email.Contains(searchString)),
-
-                nameof(PersonReponse.DateOfBirth) =>
-                await _personsRepository.GetFilterPersons(temp =>
-                temp.DateOfBirth.Value.ToShortDateString().Contains(searchString)),
-
-                nameof(PersonReponse.Address) =>
-                await _personsRepository.GetFilterPersons(temp =>
-                temp.Address.Contains(searchString)),
+                case nameof(PersonReponse.Email):
+                    matchingPersons = await _personsRepository.GetFilterPersons(temp => temp.Email.Contains(searchString));
+                    break;
 
 
-                nameof(PersonReponse.Country) =>
-                await _personsRepository.GetFilterPersons(temp =>
-                temp.Country.CountryName.Contains(searchString)),
+                case nameof(PersonReponse.DateOfBirth):
+                    DateTime.TryParse(searchString, out DateTime dtDate);
+                    matchingPersons = await _personsRepository.GetFilterPersons(temp => temp.DateOfBirth.Value == dtDate);
+                    break;
 
-                _ => await _personsRepository.GetAllPersons()
-            };
 
-            return persons.Select(temp => temp.ToPersonReoponse()).ToList();
+
+                case nameof(PersonReponse.CountryId):
+                    matchingPersons = await _personsRepository.GetFilterPersons(temp => temp.Country.CountryName.Contains(searchString));
+                    break;
+
+                case nameof(PersonReponse.Address):
+                    matchingPersons = await _personsRepository.GetFilterPersons(temp => temp.Address.Contains(searchString));
+                    break;
+
+                default:
+                    matchingPersons = await _personsRepository.GetAllPersons();
+                    break;
+            }
+
+            return matchingPersons.Select(temp => temp.ToPersonReoponse()).ToList();
         }
         public async Task<List<PersonReponse>> GetSortedPerson(List<PersonReponse> allPersons, string SortBy, SortOrderOptions sortOrder)
         {
@@ -126,11 +140,10 @@ namespace Services
 
             //Validate property in personUpdateRequest
             ValidationHelper.ModelValition(personUpdateRequest);
-
             //find person 
             Person? matchingPerson = await _personsRepository.GetPersonById(personUpdateRequest.PersonId);
 
-            if (matchingPerson == null) throw new ArgumentException("invalid PersonId");
+            if (matchingPerson == null) throw new InvalidIdException("invalid PersonId");
 
             //Update property
 

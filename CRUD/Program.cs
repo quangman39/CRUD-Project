@@ -1,25 +1,34 @@
-using Enities;
-using Microsoft.EntityFrameworkCore;
-using Repositories;
-using RepositoriesContracts;
-using ServiceContracts;
-using Services;
+using CRUD.StartupExtensions;
+using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConection"));
-    });
+//config serilog
+builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, LoggerConfiguration loggerConfiguration) =>
+{
+    loggerConfiguration.ReadFrom.Configuration(context.Configuration)//read configuration setting from buil-in configuration
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
-builder.Services.AddScoped<IPersonsRepository, PersonsRepository>();
+    .ReadFrom.Services(services);
+    // read our current app's service  and make them avaiable to serilog
 
-builder.Services.AddScoped<ICountriesService, CountriesService>();
-builder.Services.AddScoped<IPersonService, PersonService>();
+});
+
+//using configure file to add services
+builder.Services.ConfigureService(builder.Configuration);
+
 
 var app = builder.Build();
+
+if (builder.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandlingMiddleware();
+}
+
+
 
 app.UseStaticFiles();
 app.UseRouting();

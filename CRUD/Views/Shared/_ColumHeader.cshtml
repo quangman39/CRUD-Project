@@ -6,7 +6,7 @@
            asp-route-searchString="@ViewBag.CurrentSeachString"
            asp-route-sortBy="@ViewBag.ColumnName"
            asp-route-sortOrder="DESC">@ViewBag.DisplayName </a>
-        <i class="bi bi-caret-up-fill">
+        <i class="fa-solid fa-sort-up"></i>
     </th>
 
 }
@@ -21,7 +21,7 @@ ViewBag.CurrentSortBy == ViewBag.ColumnName && ViewBag.CurrentSortOrder == SortO
            asp-route-searchString="@ViewBag.CurrentSeachString"
            asp-route-sortBy="@ViewBag.ColumnName"
            asp-route-sortOrder="ASC">@ViewBag.DisplayName </a>
-        <i class="bi bi-caret-down-fill">
+        <i class="fa-solid fa-sort-down"></i>
     </th>
 }
 else{

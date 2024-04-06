@@ -15,7 +15,7 @@ namespace Enities
         [ForeignKey(nameof(CountryId))]
         public virtual Country Country { get; set; }
         public string? Address { get; set; }
-        public bool? ReceiveNewsLetters { get; set; }
+        public bool ReceiveNewsLetters { get; set; }
 
 
     }

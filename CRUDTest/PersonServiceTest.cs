@@ -3,6 +3,7 @@ using Enities;
 using EntityFrameworkCoreMock;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Moq;
 using RepositoriesContracts;
 using ServiceContracts;
@@ -18,7 +19,9 @@ namespace CRUDTest
         private readonly IPersonService _personService;
 
         private readonly Mock<IPersonsRepository> _personRepositoryMock;
+        private readonly Mock<ILogger<PersonService>> _loggerMock;
         private readonly IPersonsRepository _personsRepository;
+        private readonly ILogger<PersonService> _logger;
 
         private readonly IFixture fixture;
 
@@ -28,6 +31,9 @@ namespace CRUDTest
 
             _personRepositoryMock = new Mock<IPersonsRepository>();
             _personsRepository = _personRepositoryMock.Object;
+            _loggerMock = new Mock<ILogger<PersonService>>();
+            _logger = _loggerMock.Object;
+
 
             var countriesInitialData = new List<Country>() { };
             var personInitialData = new List<Person>() { };
@@ -42,7 +48,10 @@ namespace CRUDTest
             //Create mocks for object
             dbContextMook.CreateDbSetMock(temp => temp.Countries, countriesInitialData);
             dbContextMook.CreateDbSetMock(temp => temp.Persons, personInitialData);
-            _personService = new PersonService(_personsRepository);
+
+
+
+            _personService = new PersonService(_personsRepository, _logger);
         }
 
 
