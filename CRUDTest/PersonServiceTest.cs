@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using RepositoriesContracts;
-using ServiceContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.Enums;
+using ServiceContracts.IPersonsServices;
 using Services;
 using System.Linq.Expressions;
 using Xunit;
@@ -16,7 +16,7 @@ namespace CRUDTest
 {
     public class PersonServiceTest
     {
-        private readonly IPersonService _personService;
+        private readonly IPersonsGetterService _personService;
 
         private readonly Mock<IPersonsRepository> _personRepositoryMock;
         private readonly Mock<ILogger<PersonService>> _loggerMock;

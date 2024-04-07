@@ -49,7 +49,7 @@ namespace Repositories
         {
             Person? matchingPerson = await _db.Persons.FirstOrDefaultAsync(tmp => tmp.PersonID == person.PersonID);
 
-            if (matchingPerson != null) { return matchingPerson; }
+            if (matchingPerson == null) { return matchingPerson; }
 
             matchingPerson.PersonName = person.PersonName;
             matchingPerson.DateOfBirth = person.DateOfBirth;

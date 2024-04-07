@@ -85,7 +85,7 @@
     <label class="form-label" asp-for="CountryId">Country</label>
    </div>
    <div class="flex-1">
-    <select asp-for="CountryId" class="form-input" asp-items="@ViewBag.Countries">
+                <select asp-for="CountryId" class="form-input" asp-items="@ViewBag.Countries">
      <option value="">Please Select</option>
     </select>
     <span asp-validation-for="CountryId" class="text-red"></span>

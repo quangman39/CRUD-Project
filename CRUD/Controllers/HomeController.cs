@@ -7,20 +7,29 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.Enums;
+using ServiceContracts.IPersonsServices;
 
 namespace CRUD.Controllers
 {
     [TypeFilter<HanldeExceptionFilters>]
     public class HomeController : Controller
     {
-        private readonly IPersonService _personService;
+        private readonly IPersonsGetterService _personsGetterService;
+        private readonly IPersonsSorterService _personsSorterService;
+        private readonly IPersonsUpdateService _personsUpdateService;
+        private readonly IPersonsAdderService _personsAdderService;
+        private readonly IPersonsDeleterService _personsDeleterService;
         private readonly ICountriesService _countriesService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ICountriesService countriesServic, IPersonService personService, ILogger<HomeController> logger)
+        public HomeController(IPersonsGetterService personsGetterService, IPersonsSorterService personsSorterService, IPersonsUpdateService personsUpdateService, IPersonsAdderService personsAdderService, IPersonsDeleterService personsDeleterService, ICountriesService countriesService, ILogger<HomeController> logger)
         {
-            _personService = personService;
-            _countriesService = countriesServic;
+            _personsGetterService = personsGetterService;
+            _personsSorterService = personsSorterService;
+            _personsUpdateService = personsUpdateService;
+            _personsAdderService = personsAdderService;
+            _personsDeleterService = personsDeleterService;
+            _countriesService = countriesService;
             _logger = logger;
         }
 
@@ -34,10 +43,10 @@ namespace CRUD.Controllers
             _logger.LogDebug("searchBy " + searchBy + " searchString" + sortBy + " sortBy" + sortOrder + " sortOrder");
 
             //Search
-            List<PersonReponse> list_person = await _personService.GetFilterPerson(searchBy, searchString);
+            List<PersonReponse> list_person = await _personsGetterService.GetFilterPerson(searchBy, searchString);
 
             //Sort
-            List<PersonReponse> list_person_get_Sorted = await _personService.GetSortedPerson(list_person, sortBy, sortOrder);
+            List<PersonReponse> list_person_get_Sorted = await _personsSorterService.GetSortedPerson(list_person, sortBy, sortOrder);
 
             return View(list_person_get_Sorted);
         }
@@ -64,7 +73,7 @@ namespace CRUD.Controllers
         {
 
             //call service method
-            PersonReponse personReponse = await _personService.AddPerson(personRequest);
+            PersonReponse personReponse = await _personsAdderService.AddPerson(personRequest);
 
             //navigate to Index() action method 
             return RedirectToAction("Index");
@@ -74,13 +83,13 @@ namespace CRUD.Controllers
         public async Task<IActionResult> Edit(Guid personID)
         {
             //call method 
-            PersonReponse? person_reponse = await _personService.GetPersonById(personID);
+            PersonReponse? person_reponse = await _personsGetterService.GetPersonById(personID);
             if (person_reponse == null) return new NotFoundResult();
 
             //convert to personUpdate
             PersonUpdateRequest personUpdate = person_reponse.ToPersonUpdateRequest();
             List<CountryReponse> countries = await _countriesService.GetAll();
-            ViewBag.Coutries = countries.Select(x => new SelectListItem()
+            ViewBag.Countries = countries.Select(x => new SelectListItem()
             {
                 Value = x.CountryId.ToString(),
                 Text = x.CountryName,
@@ -95,7 +104,7 @@ namespace CRUD.Controllers
         {
             //callmethod
 
-            PersonReponse personReponse = await _personService.UpdatePerson(personRequest);
+            PersonReponse personReponse = await _personsUpdateService.UpdatePerson(personRequest);
 
             //navigate to Index
             return RedirectToAction("Index");
@@ -103,7 +112,7 @@ namespace CRUD.Controllers
         public async Task<IActionResult> Delete(Guid personID)
         {
             //call method 
-            await _personService.DeletePerosn(personID);
+            await _personsDeleterService.DeletePerosn(personID);
 
             return RedirectToAction("Index");
         }
